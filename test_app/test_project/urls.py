@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.urls import path
 
 from . import views
+from . import books_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+    path('', books_view.get_books, name='index'),
     path('profile', views.profile, name='profile'),
     path('test_form', views.test_form, name='test form'),
 ]

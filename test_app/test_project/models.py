@@ -5,6 +5,9 @@ from django.db import models
 class Author(models.Model):
     name = models.CharField(max_length=127)
 
+    def __str__(self) -> str:
+        return f"({self.pk}) {self.name}"
+
 
 class Book(models.Model):
     name = models.CharField(max_length=100)
@@ -15,6 +18,7 @@ class Book(models.Model):
         null=True
     )
 
-    user = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING,
-    )
+    def __str__(self) -> str:
+        if self.author is None:
+            return f"({self.pk}) {self.name}"
+        return f"({self.pk}) {self.name} author:{self.author.name}"
