@@ -24,3 +24,7 @@ class TestForm(forms.Form):
         required=True
     )
 
+
+class SignUpForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)

@@ -16,13 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth import views as auth_views
 
 from . import views
 from . import books_view
+from . import sign_up
+
+auth = [
+    path("accounts/signIn/", auth_views.LoginView.as_view()),
+    path("accounts/logout/", auth_views.LogoutView.as_view()),
+    path("accounts/signUp/", sign_up.signup),
+]
 
 urlpatterns = [
+    # ADMIN
     path('admin/', admin.site.urls),
+    # MY
     path('', books_view.get_books, name='index'),
     path('profile', views.profile, name='profile'),
     path('test_form', views.test_form, name='test form'),
-]
+] + auth

@@ -2,10 +2,12 @@ import random
 
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from .forms import TestForm
 
 
+@login_required(redirect_field_name="/login")
 def index(request: HttpRequest):
     result = 0
 

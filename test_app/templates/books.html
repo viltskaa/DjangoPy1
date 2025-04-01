@@ -10,6 +10,19 @@
     >
 </head>
 <body class="d-flex flex-column justify-content-center align-items-center p-3">
+<header class="w-100 bg-black rounded-5 mb-5 d-flex p-3 gap-2 justify-content-center" style="height: 80px">
+    {% if user.is_authenticated %}
+        <button class="btn btn-primary" disabled>{{ user.username }}</button>
+        <form class="h-100" action="/accounts/logout/" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger h-100">Log Out</button>
+        </form>
+    {% else %}
+        <a href="/accounts/signIn/" class="btn btn-primary">Sign In</a>
+        <a href="/accounts/signUp" class="btn btn-success">Sign Up</a>
+    {% endif %}
+</header>
+
 {% for book in books %}
 <div class="rounded-2 mb-3 d-flex gap-2 shadow" style="
     width: 700px;
@@ -24,9 +37,16 @@
         {% else %}
         <p>Автора нет</p>
         {%endif%}
+
+        {% if user.is_authenticated %}
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio enim est nam quas repellat? Corporis
             dolorum ea, eius harum iusto magnam nam quos unde voluptas! Delectus deleniti fuga mollitia
             reprehenderit!</p>
+        {% else %}
+        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+        <br>
+        <a class="link-primary" href="/accounts/signIn/">Читать полностью</a>
+        {% endif %}
 
         <button type="button" class="btn btn-danger w-75 my-2 rounded-5">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart me-2"
