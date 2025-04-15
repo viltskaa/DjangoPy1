@@ -23,6 +23,15 @@
     {% endif %}
 </header>
 
+<form action="" class="d-flex gap-2 mb-5 w-50">
+    <label for="search" class=""></label>
+    <input id="search" name="q" class="form-control" type="text" value="{{ q }}"/>
+    <input name="pages" class="form-control w-50" type="number" min="1" placeholder="Количество страниц" value="{{ pages }}"/>
+    <label for="author">С автором</label>
+    <input type="checkbox" id="author" name="author">
+    <button type="submit" class="btn btn-primary">Поиск</button>
+</form>
+
 {% for book in books %}
 <div class="rounded-2 mb-3 d-flex gap-2 shadow" style="
     width: 700px;
@@ -37,6 +46,8 @@
         {% else %}
         <p>Автора нет</p>
         {%endif%}
+
+        <p>Число страниц: {{ book.count_pages }}</p>
 
         {% if user.is_authenticated %}
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio enim est nam quas repellat? Corporis
