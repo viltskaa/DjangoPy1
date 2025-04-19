@@ -10,16 +10,19 @@
     >
 </head>
 <body class="d-flex flex-column justify-content-center align-items-center p-3">
-<header class="w-100 bg-black rounded-5 mb-5 d-flex p-3 gap-2 justify-content-center" style="height: 80px">
+<header class="w-100 rounded-5 mb-5 d-flex p-1 gap-2 justify-content-end shadow border">
     {% if user.is_authenticated %}
-        <button class="btn btn-primary" disabled>{{ user.username }}</button>
-        <form class="h-100" action="/accounts/logout/" method="post">
+        <button class="btn btn-primary rounded-5" disabled>{{ user.username }}</button>
+        <form class="" action="/accounts/logout/" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger h-100">Log Out</button>
+            <button type="submit" class="btn btn-danger h-100 rounded-5">Log Out</button>
         </form>
+        {% if user.is_superuser %}
+            <a href="/add" class="btn btn-primary rounded-5 p-2">Plus</a>
+        {% endif %}
     {% else %}
-        <a href="/accounts/signIn/" class="btn btn-primary">Sign In</a>
-        <a href="/accounts/signUp" class="btn btn-success">Sign Up</a>
+        <a href="/accounts/signIn/" class="btn btn-primary rounded-5 p-2">Sign In</a>
+        <a href="/accounts/signUp" class="btn btn-success rounded-5 p-2">Sign Up</a>
     {% endif %}
 </header>
 
@@ -33,10 +36,16 @@
 </form>
 
 {% for book in books %}
-<div class="rounded-2 mb-3 d-flex gap-2 shadow" style="
+<div class="rounded-2 mb-3 d-flex gap-2 shadow position-relative" style="
     width: 700px;
     height: min-content;
 ">
+    {% if user.is_superuser %}
+    <div class="position-absolute top-0 end-0 d-flex flex-column gap-1 p-2">
+        <a href="/edit?book_id={{ book.pk }}" class="btn btn-outline-light text-dark">Edit</a>
+        <a href="/delete?book_id={{ book.pk }}" class="btn btn-danger">Del</a>
+    </div>
+    {% endif %}
     <img class="m-2" width="200" height="200"
          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmDwycVzCsWaZx5AaCTeqz6e8qLbt8UaQz7g&s" alt="">
     <div class="">

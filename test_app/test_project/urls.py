@@ -33,6 +33,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # MY
     path('', books_view.get_books, name='index'),
+    path('add', books_view.create_book, name='add_book'),
     path('profile', views.profile, name='profile'),
-    path('test_form', views.test_form, name='test form'),
+    path('edit', books_view.edit_book, name='edit_book'),
+    path('delete', books_view.delete_book, name='delete_book'),
 ] + auth

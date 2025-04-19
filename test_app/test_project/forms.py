@@ -1,5 +1,7 @@
 from django import forms
 
+from .models import Author
+
 
 class TestForm(forms.Form):
     text_field = forms.CharField(
@@ -23,6 +25,20 @@ class TestForm(forms.Form):
         min_length=8,
         required=True
     )
+
+
+class BookForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        min_length=5,
+        required=True
+    )
+
+    count_pages = forms.IntegerField(
+        min_value=1,
+    )
+
+    author = forms.ModelChoiceField(queryset=Author.objects.all())
 
 
 class SignUpForm(forms.Form):

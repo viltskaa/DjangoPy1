@@ -13,16 +13,9 @@
 
 <form class="w-25 bg-light p-4 rounded" method="post">
     {% csrf_token %}
-    <h2>{{ title }}</h2>
-    {% for field in form %}
-    <div class="mb-3">
-        {{ field.label_tag }}
-        {{ field }}
-    </div>
-    {% endfor %}
-    {{ errors }}
-    <button type="submit" class="btn btn-primary w-100 mb-2">Go</button>
-    <a href="/" class="btn btn-light w-100">Back</a>
+    <h4 class="text-center">Точно ли вы хотите удалить книжку {{ name }}</h4>
+    <button type="submit" class="btn btn-light w-100 mb-2">Да</button>
+    <a href="/" class="btn btn-primary w-100">Нет</a>
 </form>
 <script>
     const $inputs = document.querySelectorAll("input")
