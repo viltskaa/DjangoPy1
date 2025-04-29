@@ -37,4 +37,8 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('edit', books_view.edit_book, name='edit_book'),
     path('delete', books_view.delete_book, name='delete_book'),
+    path('add_to_basket', books_view.add_to_basket, name='add_to_basket'),
+    path('basket', books_view.get_basket, name='basket'),
+    path('minus_from_basket', books_view.minus_from_basket, name='minus_from_basket'),
+    path('plus_to_basket', books_view.plus_to_basket, name='plus_to_basket'),
 ] + auth

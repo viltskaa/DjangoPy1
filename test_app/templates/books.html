@@ -20,6 +20,7 @@
         {% if user.is_superuser %}
             <a href="/add" class="btn btn-primary rounded-5 p-2">Plus</a>
         {% endif %}
+        <a href="/basket" class="btn btn-primary rounded-5 p-2">Basket</a>
     {% else %}
         <a href="/accounts/signIn/" class="btn btn-primary rounded-5 p-2">Sign In</a>
         <a href="/accounts/signUp" class="btn btn-success rounded-5 p-2">Sign Up</a>
@@ -35,28 +36,28 @@
     <button type="submit" class="btn btn-primary">Поиск</button>
 </form>
 
-{% for book in books %}
+{% for book_dto in books %}
 <div class="rounded-2 mb-3 d-flex gap-2 shadow position-relative" style="
     width: 700px;
     height: min-content;
 ">
     {% if user.is_superuser %}
     <div class="position-absolute top-0 end-0 d-flex flex-column gap-1 p-2">
-        <a href="/edit?book_id={{ book.pk }}" class="btn btn-outline-light text-dark">Edit</a>
-        <a href="/delete?book_id={{ book.pk }}" class="btn btn-danger">Del</a>
+        <a href="/edit?book_id={{ book_dto.book.pk }}" class="btn btn-outline-light text-dark">Edit</a>
+        <a href="/delete?book_id={{ book_dto.book.pk }}" class="btn btn-danger">Del</a>
     </div>
     {% endif %}
     <img class="m-2" width="200" height="200"
          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmDwycVzCsWaZx5AaCTeqz6e8qLbt8UaQz7g&s" alt="">
     <div class="">
-        <h2 class="fw-bolder text-capitalize">{{ book.name }}</h2>
-        {% if book.author %}
-        <p>{{ book.author.name }}</p>
+        <h2 class="fw-bolder text-capitalize">{{ book_dto.book.name }}</h2>
+        {% if book_dto.book.author %}
+        <p>{{ book_dto.book.author.name }}</p>
         {% else %}
         <p>Автора нет</p>
         {%endif%}
 
-        <p>Число страниц: {{ book.count_pages }}</p>
+        <p>Число страниц: {{ book_dto.book.count_pages }}</p>
 
         {% if user.is_authenticated %}
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio enim est nam quas repellat? Corporis
@@ -68,13 +69,21 @@
         <a class="link-primary" href="/accounts/signIn/">Читать полностью</a>
         {% endif %}
 
-        <button type="button" class="btn btn-danger w-75 my-2 rounded-5">
+        {% if book_dto.is_in_basket %}
+        <div class="d-flex gap-2 align-items-center my-2">
+            <a href="/minus_from_basket?product_id={{ book_dto.book.pk }}" class="btn btn-light">-</a>
+            <small>Кол-во: {{ book_dto.count_in_basket }}</small>
+            <a href="/plus_to_basket?product_id={{ book_dto.book.pk }}" class="btn btn-primary">+</a>
+        </div>
+        {% else %}
+        <a href="/add_to_basket?book_id={{ book_dto.book.pk }}" type="button" class="btn btn-danger w-75 my-2 rounded-5">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart me-2"
                  viewBox="0 0 16 16">
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
             </svg>
             Добавить в корзину
-        </button>
+        </a>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

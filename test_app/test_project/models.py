@@ -22,3 +22,9 @@ class Book(models.Model):
         if self.author is None:
             return f"({self.pk}) {self.name}"
         return f"({self.pk}) {self.name} author:{self.author.name}"
+
+
+class Basket(models.Model):
+    product = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    count = models.IntegerField(default=0)
